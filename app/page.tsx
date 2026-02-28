@@ -332,15 +332,16 @@ export default function Home() {
 }
 
 function SponsorCard({ sponsor, small }: { sponsor: (typeof sponsors)[0]; small?: boolean }) {
+  const size = small ? 'w-44 h-44' : 'w-56 h-56';
   const content = (
-    <GlowCard className={`text-center ${small ? 'w-36' : 'w-56'}`}>
-      <div className={small ? 'p-4' : 'p-6'}>
-        <div className={`flex items-center justify-center font-bold mx-auto mb-2 ${small ? 'h-10 text-base' : 'h-14 text-xl'}`}>
+    <GlowCard className={`text-center ${size}`}>
+      <div className="h-full flex flex-col items-center justify-center p-4">
+        <div className={`flex items-center justify-center mb-3 ${small ? 'text-3xl' : 'text-4xl'}`}>
           {sponsor.logo ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={sponsor.logo} alt={sponsor.name} className="max-h-full max-w-full object-contain" />
+            <img src={sponsor.logo} alt={sponsor.name} className="max-h-12 max-w-full object-contain" />
           ) : (
-            <span className="gold-text">{sponsor.name.charAt(0)}</span>
+            <span>{sponsor.icon || sponsor.name.charAt(0)}</span>
           )}
         </div>
         <div className={`font-semibold ${small ? 'text-xs' : 'text-sm'}`}>{sponsor.name}</div>

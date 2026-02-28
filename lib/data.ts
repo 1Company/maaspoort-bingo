@@ -12,6 +12,7 @@ export interface Sponsor {
   id: string;
   name: string;
   logo?: string;
+  icon?: string;
   website?: string;
   tier: 'gold' | 'silver' | 'bronze';
   description?: string;
@@ -83,6 +84,7 @@ export const sponsors: Sponsor[] = [
   {
     id: '1',
     name: 'Albert Heijn Maaspoort',
+    icon: '🛒',
     tier: 'gold',
     website: 'https://www.ah.nl',
     description: 'Uw buurtsuper in Maaspoort',
@@ -90,18 +92,21 @@ export const sponsors: Sponsor[] = [
   {
     id: '2',
     name: 'Bakkerij Van den Berg',
+    icon: '🥐',
     tier: 'gold',
     description: 'Versgebakken brood en taart sinds 1985',
   },
   {
     id: '3',
     name: 'Café De Buurman',
+    icon: '☕',
     tier: 'silver',
     description: 'Het gezelligste café van Maaspoort',
   },
   {
     id: '4',
     name: 'Schildersbedrijf Jansen',
+    icon: '🖌️',
     tier: 'silver',
     website: 'https://example.com',
     description: 'Voor al uw schilder- en behangwerk',
@@ -109,18 +114,21 @@ export const sponsors: Sponsor[] = [
   {
     id: '5',
     name: 'Kapsalon Mooi',
+    icon: '💇',
     tier: 'bronze',
     description: 'Knipppen & stylen voor het hele gezin',
   },
   {
     id: '6',
     name: 'Fietsenmaker Piet',
+    icon: '🚲',
     tier: 'bronze',
     description: 'Reparatie, onderhoud en verkoop',
   },
   {
     id: '7',
     name: 'Snackbar Het Hoekje',
+    icon: '🍟',
     tier: 'bronze',
     description: 'De lekkerste friet van de wijk!',
   },
