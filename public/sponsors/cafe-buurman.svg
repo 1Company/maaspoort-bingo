@@ -1,9 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-  <rect width="200" height="200" rx="20" fill="#1a1a2e"/>
-  <path d="M60 70 h60 v50 q0 15 -30 15 q-30 0 -30-15z" fill="none" stroke="#C8982E" stroke-width="4"/>
-  <path d="M120 80 q20 0 20 15 q0 15 -20 15" fill="none" stroke="#C8982E" stroke-width="4"/>
-  <path d="M80 60 q5-15 0-20" fill="none" stroke="#C8982E" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
-  <path d="M95 55 q5-15 0-22" fill="none" stroke="#C8982E" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
-  <text x="100" y="155" text-anchor="middle" font-family="Georgia,serif" font-weight="bold" font-size="18" fill="white">De Buurman</text>
-  <text x="100" y="175" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#C8982E">CAFÉ</text>
+  <defs>
+    <linearGradient id="cafebg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#1C1425"/>
+      <stop offset="100%" stop-color="#0F0A15"/>
+    </linearGradient>
+    <linearGradient id="cup" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E8D5B0"/>
+      <stop offset="100%" stop-color="#C8982E"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="24" fill="url(#cafebg)"/>
+  <!-- ambient circles -->
+  <circle cx="160" cy="40" r="30" fill="#C8982E" opacity="0.04"/>
+  <circle cx="40" cy="160" r="25" fill="#C8982E" opacity="0.03"/>
+  <!-- cup -->
+  <path d="M68 68 L68 105 Q68 118 100 118 Q132 118 132 105 L132 68Z" fill="url(#cup)" opacity="0.9"/>
+  <path d="M68 68 L132 68" stroke="#D4A860" stroke-width="3" stroke-linecap="round"/>
+  <!-- handle -->
+  <path d="M132 78 Q152 78 152 93 Q152 108 132 108" fill="none" stroke="url(#cup)" stroke-width="3.5"/>
+  <!-- steam -->
+  <path d="M85 60 Q88 45 85 35" fill="none" stroke="#C8982E" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  <path d="M100 57 Q103 40 100 28" fill="none" stroke="#C8982E" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+  <path d="M115 60 Q118 45 115 35" fill="none" stroke="#C8982E" stroke-width="2" stroke-linecap="round" opacity="0.25"/>
+  <!-- saucer -->
+  <ellipse cx="100" cy="122" rx="42" ry="6" fill="#C8982E" opacity="0.2"/>
+  <text x="100" y="155" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="20" fill="white" letter-spacing="0.5">De Buurman</text>
+  <text x="100" y="175" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="12" fill="#C8982E" letter-spacing="4">CAFÉ</text>
 </svg>

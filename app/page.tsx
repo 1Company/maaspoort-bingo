@@ -8,6 +8,7 @@ import { Spotlight } from '@/components/ui/spotlight';
 import { AnimatedBorder } from '@/components/ui/animated-border';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/fade-in';
 import { GlowCard } from '@/components/ui/glow-card';
+import { Particles } from '@/components/ui/particles';
 
 export default function Home() {
   const upcomingEvents = events.filter((e) => isUpcoming(e.date));
@@ -34,7 +35,8 @@ export default function Home() {
       </motion.nav>
 
       {/* ─── HERO ─── */}
-      <Spotlight className="max-w-5xl mx-auto px-6 pt-8 pb-16 md:pt-12 md:pb-24">
+      <Spotlight className="max-w-5xl mx-auto px-6 pt-8 pb-16 md:pt-12 md:pb-24 relative">
+        <Particles />
         <div className="flex flex-col items-center text-center relative z-10">
           {/* Logo with floating glow */}
           <motion.div
@@ -44,7 +46,7 @@ export default function Home() {
             className="relative mb-10"
           >
             {/* Ambient glow behind logo */}
-            <div className="absolute inset-0 blur-3xl bg-[#C8982E]/20 rounded-full scale-75" />
+            <div className="absolute inset-0 blur-[60px] bg-[#C8982E]/25 rounded-full scale-90" />
             <Image
               src="/logo.png"
               alt="Maaspoort Bingo"
@@ -332,21 +334,31 @@ export default function Home() {
 }
 
 function SponsorCard({ sponsor, small }: { sponsor: (typeof sponsors)[0]; small?: boolean }) {
-  const size = small ? 'w-44 h-44' : 'w-56 h-56';
+  const size = small ? 'w-40 h-40' : 'w-52 h-52';
   const content = (
-    <GlowCard className={`text-center ${size}`}>
-      <div className="h-full flex flex-col items-center justify-center p-4">
-        <div className={`flex items-center justify-center mb-3 ${small ? 'w-20 h-20' : 'w-24 h-24'}`}>
-          {sponsor.logo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={sponsor.logo} alt={sponsor.name} className="w-full h-full object-contain rounded-lg" />
-          ) : (
-            <span className="gold-text text-3xl font-bold">{sponsor.name.charAt(0)}</span>
-          )}
-        </div>
-        <div className={`font-semibold ${small ? 'text-xs' : 'text-sm'}`}>{sponsor.name}</div>
-        {!small && sponsor.description && (
-          <p className="text-xs text-slate-400 mt-1">{sponsor.description}</p>
+    <GlowCard className={`text-center ${size} group`}>
+      <div className="h-full flex items-center justify-center p-3 relative overflow-hidden">
+        {sponsor.logo ? (
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={sponsor.logo}
+              alt={sponsor.name}
+              className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
+            />
+            {/* Hover overlay with name */}
+            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center rounded-lg m-3">
+              <span className="text-white font-semibold text-sm">{sponsor.name}</span>
+              {sponsor.description && (
+                <span className="text-slate-300 text-xs mt-1 px-2 text-center">{sponsor.description}</span>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="flex flex-col items-center justify-center">
+            <span className="gold-text text-4xl font-bold mb-2">{sponsor.name.charAt(0)}</span>
+            <span className={`font-semibold ${small ? 'text-xs' : 'text-sm'}`}>{sponsor.name}</span>
+          </div>
         )}
       </div>
     </GlowCard>

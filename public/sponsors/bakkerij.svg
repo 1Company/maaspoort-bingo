@@ -1,10 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-  <rect width="200" height="200" rx="20" fill="#8B4513"/>
-  <ellipse cx="100" cy="85" rx="55" ry="35" fill="#D4A054"/>
-  <ellipse cx="75" cy="80" rx="20" ry="28" fill="#C4903C"/>
-  <ellipse cx="125" cy="80" rx="20" ry="28" fill="#C4903C"/>
-  <ellipse cx="100" cy="78" rx="18" ry="26" fill="#C4903C"/>
-  <rect x="60" y="85" width="80" height="25" rx="3" fill="#D4A054"/>
-  <text x="100" y="150" text-anchor="middle" font-family="Georgia,serif" font-weight="bold" font-size="22" fill="white">Van den Berg</text>
-  <text x="100" y="170" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#D4A054">BAKKERIJ</text>
+  <defs>
+    <linearGradient id="bakbg" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#5C3317"/>
+      <stop offset="100%" stop-color="#3E2210"/>
+    </linearGradient>
+    <linearGradient id="bread" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F0C070"/>
+      <stop offset="50%" stop-color="#D4943C"/>
+      <stop offset="100%" stop-color="#C07828"/>
+    </linearGradient>
+    <linearGradient id="wheat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5D780"/>
+      <stop offset="100%" stop-color="#C8982E"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="24" fill="url(#bakbg)"/>
+  <!-- wheat stalks -->
+  <g opacity="0.3" stroke="url(#wheat)" stroke-width="1.5" fill="none">
+    <path d="M30 200 Q35 150 45 120"/>
+    <path d="M170 200 Q165 150 155 120"/>
+    <ellipse cx="42" cy="118" rx="4" ry="8" fill="#C8982E" opacity="0.3"/>
+    <ellipse cx="158" cy="118" rx="4" ry="8" fill="#C8982E" opacity="0.3"/>
+  </g>
+  <!-- croissant shape -->
+  <path d="M70 75 Q100 40 130 75 Q115 65 100 72 Q85 65 70 75Z" fill="url(#bread)" opacity="0.9"/>
+  <path d="M75 75 Q100 55 125 75" fill="none" stroke="#A06820" stroke-width="1" opacity="0.5"/>
+  <path d="M80 72 Q100 58 120 72" fill="none" stroke="#A06820" stroke-width="1" opacity="0.3"/>
+  <text x="100" y="120" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="17" fill="#F0D8A0" letter-spacing="1">Van den Berg</text>
+  <line x1="55" y1="130" x2="145" y2="130" stroke="#C8982E" stroke-width="0.5" opacity="0.4"/>
+  <text x="100" y="150" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="13" fill="#C8982E" letter-spacing="3" opacity="0.8">BAKKERIJ</text>
+  <text x="100" y="170" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-style="italic" font-size="10" fill="#A08050" opacity="0.6">sinds 1985</text>
 </svg>

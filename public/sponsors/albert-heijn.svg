@@ -1,4 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-  <rect width="200" height="200" rx="20" fill="#00A0E2"/>
-  <text x="100" y="115" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold" font-size="90" fill="white">ah</text>
+  <defs>
+    <linearGradient id="ahbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00B4E6"/>
+      <stop offset="100%" stop-color="#0078C1"/>
+    </linearGradient>
+    <filter id="ahshadow"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/></filter>
+  </defs>
+  <rect width="200" height="200" rx="24" fill="url(#ahbg)"/>
+  <rect x="8" y="8" width="184" height="184" rx="20" fill="none" stroke="white" stroke-opacity="0.15" stroke-width="1"/>
+  <text x="100" y="105" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="72" fill="white" filter="url(#ahshadow)">ah</text>
+  <text x="100" y="145" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="600" font-size="14" fill="white" opacity="0.9">Maaspoort</text>
 </svg>

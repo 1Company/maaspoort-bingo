@@ -1,11 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-  <rect width="200" height="200" rx="20" fill="#2D5A27"/>
-  <rect x="55" y="50" width="50" height="12" rx="2" fill="#D4A054"/>
-  <rect x="60" y="62" width="40" height="35" rx="2" fill="#E8D5A3"/>
-  <rect x="75" y="97" width="10" height="40" rx="2" fill="#8B6914"/>
-  <circle cx="135" cy="80" r="3" fill="#FF6B6B"/>
-  <circle cx="140" cy="68" r="3" fill="#4ECDC4"/>
-  <circle cx="130" cy="72" r="3" fill="#FFE66D"/>
-  <text x="100" y="155" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold" font-size="16" fill="white">Schildersbedrijf</text>
-  <text x="100" y="175" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold" font-size="22" fill="#E8D5A3">JANSEN</text>
+  <defs>
+    <linearGradient id="sjbg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#1A3A2A"/>
+      <stop offset="100%" stop-color="#0D2218"/>
+    </linearGradient>
+    <linearGradient id="brush" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D4A054"/>
+      <stop offset="100%" stop-color="#8B6914"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="24" fill="url(#sjbg)"/>
+  <!-- paint splashes background -->
+  <circle cx="140" cy="50" r="15" fill="#FF6B6B" opacity="0.12"/>
+  <circle cx="55" cy="45" r="12" fill="#4ECDC4" opacity="0.1"/>
+  <circle cx="150" cy="100" r="10" fill="#FFE66D" opacity="0.08"/>
+  <!-- roller -->
+  <rect x="60" y="50" width="55" height="16" rx="8" fill="#E8D5A3"/>
+  <rect x="62" y="52" width="51" height="12" rx="6" fill="#4ECDC4" opacity="0.7"/>
+  <rect x="84" y="66" width="6" height="35" rx="2" fill="url(#brush)"/>
+  <!-- paint drips -->
+  <path d="M68 66 L68 74" stroke="#4ECDC4" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M80 66 L80 70" stroke="#4ECDC4" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  <path d="M105 66 L105 72" stroke="#4ECDC4" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+  <!-- color dots -->
+  <circle cx="130" cy="75" r="5" fill="#FF6B6B" opacity="0.8"/>
+  <circle cx="140" cy="65" r="4" fill="#4ECDC4" opacity="0.8"/>
+  <circle cx="138" cy="82" r="3.5" fill="#FFE66D" opacity="0.8"/>
+  <text x="100" y="130" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="300" font-size="13" fill="white" opacity="0.8" letter-spacing="2">SCHILDERSBEDRIJF</text>
+  <text x="100" y="158" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="32" fill="white">Jansen</text>
+  <line x1="60" y1="168" x2="140" y2="168" stroke="#4ECDC4" stroke-width="0.5" opacity="0.3"/>
 </svg>
