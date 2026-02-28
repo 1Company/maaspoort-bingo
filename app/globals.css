@@ -9,8 +9,8 @@
     scroll-behavior: smooth;
   }
   body {
-    background-color: #FAFAF7;
-    color: #1a1a1a;
+    background-color: #0E1623;
+    color: #EDEDED;
   }
 }
 
@@ -19,7 +19,7 @@
 }
 
 .logo-glow {
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
 }
 
 .gold-text {
