@@ -1,89 +1,79 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { events, sponsors, announcements, formatDate, isUpcoming } from '@/lib/data';
 
-function BingoBall({ number, color }: { number: number; color: string }) {
-  return (
-    <div className={`bingo-ball w-14 h-14 rounded-full flex items-center justify-center text-xl font-black ${color} select-none`}>
-      {number}
-    </div>
-  );
-}
-
 export default function Home() {
-  const upcomingEvents = events.filter(e => isUpcoming(e.date));
+  const upcomingEvents = events.filter((e) => isUpcoming(e.date));
   const nextEvent = upcomingEvents[0];
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="bg-gradient-to-br from-red-700 via-red-600 to-amber-600 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 right-20 w-40 h-40 rounded-full bg-yellow-300 blur-3xl" />
-          <div className="absolute bottom-10 left-10 w-60 h-60 rounded-full bg-red-300 blur-3xl" />
+      {/* ─── NAV ─── */}
+      <nav className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Image src="/logo.png" alt="Maaspoort Bingo" width={40} height={40} className="logo-glow" />
+          <span className="font-bold text-sm tracking-wide text-[#EDEDED]">MAASPOORT BINGO</span>
         </div>
-        <nav className="relative container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="text-3xl">🎱</div>
-            <div>
-              <div className="font-black text-xl tracking-tight">MAASPOORT BINGO</div>
-              <div className="text-xs text-red-200">Den Bosch</div>
-            </div>
-          </div>
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <a href="#agenda" className="hover:text-amber-300 transition-colors">Agenda</a>
-            <a href="#sponsoren" className="hover:text-amber-300 transition-colors">Sponsoren</a>
-            <a href="#meedoen" className="hover:text-amber-300 transition-colors">Word Sponsor</a>
-            <Link href="/slideshow" className="bg-white text-red-700 px-4 py-2 rounded-full font-bold hover:bg-amber-100 transition-colors">
-              📺 Slideshow
-            </Link>
-          </div>
-        </nav>
+        <div className="hidden md:flex items-center gap-8 text-sm text-slate-400">
+          <a href="#agenda" className="hover:text-[#F5C451] transition-colors">Agenda</a>
+          <a href="#sponsoren" className="hover:text-[#F5C451] transition-colors">Sponsoren</a>
+          <a href="#meedoen" className="hover:text-[#F5C451] transition-colors">Word Sponsor</a>
+          <Link
+            href="/slideshow"
+            className="border border-[#F5C451]/40 text-[#F5C451] px-4 py-2 rounded-full text-xs font-semibold hover:border-[#F5C451] transition-colors"
+          >
+            Slideshow
+          </Link>
+        </div>
+      </nav>
 
-        {/* Hero */}
-        <div className="relative container mx-auto px-4 py-16 md:py-24 text-center">
-          <div className="flex justify-center gap-3 mb-8">
-            <BingoBall number={11} color="text-red-600" />
-            <BingoBall number={24} color="text-blue-700" />
-            <BingoBall number={37} color="text-green-700" />
-            <BingoBall number={52} color="text-amber-600" />
-            <BingoBall number={69} color="text-purple-700" />
-          </div>
-          <h1 className="text-5xl md:text-7xl font-black mb-4 tracking-tight">
-            BINGO!
+      {/* ─── HERO ─── */}
+      <section className="max-w-6xl mx-auto px-6 py-24 md:py-32 flex flex-col items-center text-center">
+        <Image
+          src="/logo.png"
+          alt="Maaspoort Bingo"
+          width={600}
+          height={600}
+          priority
+          className="logo-glow w-[280px] md:w-[420px] lg:w-[500px] h-auto mb-12"
+        />
+
+        {nextEvent ? (
+          <>
+            <p className="text-slate-400 text-sm uppercase tracking-widest mb-2">Volgende bingo</p>
+            <h1 className="text-3xl md:text-5xl font-bold mb-3">
+              <span className="text-[#F5C451]">{formatDate(nextEvent.date)}</span>
+            </h1>
+            <p className="text-slate-400 mb-1">{nextEvent.time} uur — {nextEvent.location}</p>
+            {nextEvent.special && nextEvent.description && (
+              <p className="text-[#F5C451]/80 text-sm mt-1">{nextEvent.description}</p>
+            )}
+          </>
+        ) : (
+          <h1 className="text-3xl md:text-5xl font-bold text-slate-400">
+            Binnenkort weer bingo!
           </h1>
-          <p className="text-xl md:text-2xl text-red-100 mb-2">
-            Elke twee weken gezelligheid in Maaspoort
-          </p>
-          <p className="text-red-200 mb-10 max-w-lg mx-auto">
-            Kom langs, win mooie prijzen en geniet van een gezellige avond met je buren!
-          </p>
+        )}
 
-          {nextEvent && (
-            <div className="inline-block bg-white/15 backdrop-blur-sm rounded-2xl px-8 py-5 border border-white/20">
-              <div className="text-amber-300 text-sm font-bold uppercase tracking-wider mb-1">Volgende bingo</div>
-              <div className="text-2xl font-black">{formatDate(nextEvent.date)}</div>
-              <div className="text-red-200 mt-1">{nextEvent.time} uur — {nextEvent.location}</div>
-              {nextEvent.special && (
-                <div className="mt-2 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full inline-block">
-                  ⭐ {nextEvent.description}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </header>
+        <a
+          href="#agenda"
+          className="mt-10 bg-[#F5C451] text-[#0E1623] font-bold px-8 py-3.5 rounded-full hover:bg-[#F5C451]/90 transition-colors"
+        >
+          Doe mee
+        </a>
+      </section>
 
-      {/* Mededelingen ticker */}
+      {/* ─── ANNOUNCEMENTS ─── */}
       {announcements.length > 0 && (
-        <div className="bg-amber-500 text-white py-2 overflow-hidden">
-          <div className="container mx-auto px-4 flex items-center gap-4 text-sm font-medium">
-            <span className="font-black flex-shrink-0">📢 NIEUWS</span>
-            <div className="overflow-hidden whitespace-nowrap">
+        <div className="border-y border-white/5 py-3 overflow-hidden">
+          <div className="max-w-6xl mx-auto px-6 flex items-center gap-4 text-sm">
+            <span className="text-[#F5C451] font-semibold flex-shrink-0">Nieuws</span>
+            <div className="overflow-hidden whitespace-nowrap text-slate-400">
               <span className="inline-block animate-marquee">
                 {announcements.map((a, i) => (
                   <span key={a.id}>
                     {a.text}
-                    {i < announcements.length - 1 && ' ● '}
+                    {i < announcements.length - 1 && '  ·  '}
                   </span>
                 ))}
               </span>
@@ -92,48 +82,47 @@ export default function Home() {
         </div>
       )}
 
-      {/* Agenda */}
-      <section id="agenda" className="container mx-auto px-4 py-16">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-black text-gray-900">📅 Agenda</h2>
-          <p className="text-gray-500 mt-2">Alle aankomende bingoavonden</p>
+      {/* ─── AGENDA ─── */}
+      <section id="agenda" className="max-w-6xl mx-auto px-6 py-24">
+        <div className="text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold">Agenda</h2>
+          <p className="text-slate-400 text-sm mt-2">Alle aankomende bingoavonden</p>
         </div>
 
-        <div className="max-w-2xl mx-auto space-y-4">
+        <div className="grid gap-4 max-w-2xl mx-auto">
           {upcomingEvents.length === 0 ? (
-            <p className="text-center text-gray-500 py-10">Geen aankomende data gepland. Kom snel terug!</p>
+            <p className="text-center text-slate-500 py-10">
+              Geen aankomende data gepland. Kom snel terug!
+            </p>
           ) : (
-            upcomingEvents.map((event, i) => (
+            upcomingEvents.map((event) => (
               <div
                 key={event.id}
-                className={`flex items-stretch rounded-xl overflow-hidden border-2 transition-all hover:shadow-lg ${
-                  event.special ? 'border-amber-400 bg-amber-50' : 'border-gray-200 bg-white'
-                }`}
-                style={{ animationDelay: `${i * 100}ms` }}
+                className="bg-[#161F2F] border border-[#F5C451]/20 hover:border-[#F5C451]/40 rounded-xl overflow-hidden flex transition-colors"
               >
                 {/* Date block */}
-                <div className={`flex-shrink-0 w-24 flex flex-col items-center justify-center p-3 ${
-                  event.special ? 'bg-amber-500 text-white' : 'bg-red-600 text-white'
-                }`}>
-                  <div className="text-3xl font-black">{new Date(event.date).getDate()}</div>
-                  <div className="text-xs uppercase font-bold">
+                <div className="flex-shrink-0 w-20 flex flex-col items-center justify-center p-3 bg-[#F5C451]/10">
+                  <span className="text-2xl font-bold text-[#F5C451]">
+                    {new Date(event.date).getDate()}
+                  </span>
+                  <span className="text-xs uppercase text-slate-400">
                     {new Date(event.date).toLocaleDateString('nl-NL', { month: 'short' })}
-                  </div>
-                  <div className="text-xs opacity-80">
-                    {new Date(event.date).toLocaleDateString('nl-NL', { weekday: 'short' })}
-                  </div>
+                  </span>
                 </div>
-
                 {/* Details */}
-                <div className="flex-1 p-4">
+                <div className="p-4 flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-lg font-bold text-gray-900">🕢 {event.time} uur</span>
-                    {event.special && <span className="bg-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">SPECIAL</span>}
+                    <span className="font-semibold">{event.time} uur</span>
+                    {event.special && (
+                      <span className="text-[#F5C451] text-xs font-semibold bg-[#F5C451]/10 px-2 py-0.5 rounded-full">
+                        Special
+                      </span>
+                    )}
                   </div>
-                  <div className="text-sm text-gray-600">📍 {event.location}</div>
-                  <div className="text-xs text-gray-400">{event.address}</div>
+                  <p className="text-sm text-slate-400">{event.location}</p>
+                  <p className="text-xs text-slate-500">{event.address}</p>
                   {event.description && (
-                    <p className="text-sm text-gray-700 mt-2">{event.description}</p>
+                    <p className="text-sm text-slate-300 mt-2">{event.description}</p>
                   )}
                 </div>
               </div>
@@ -142,76 +131,107 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Sponsoren */}
-      <section id="sponsoren" className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-black text-gray-900">🏆 Onze Sponsoren</h2>
-            <p className="text-gray-500 mt-2">Dankzij hen kunnen wij mooie prijzen aanbieden!</p>
+      {/* ─── SPONSOREN ─── */}
+      <section id="sponsoren" className="max-w-6xl mx-auto px-6 py-24">
+        <div className="text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold">Onze Sponsoren</h2>
+          <p className="text-slate-400 text-sm mt-2">Dankzij hen kunnen wij mooie prijzen aanbieden</p>
+        </div>
+
+        {/* Gold */}
+        {sponsors.filter((s) => s.tier === 'gold').length > 0 && (
+          <div className="mb-10">
+            <h3 className="text-center text-[#F5C451] text-xs font-semibold uppercase tracking-wider mb-4">
+              Goud
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+              {sponsors
+                .filter((s) => s.tier === 'gold')
+                .map((s) => (
+                  <SponsorCard key={s.id} sponsor={s} />
+                ))}
+            </div>
           </div>
+        )}
 
-          {/* Gold sponsors */}
-          {sponsors.filter(s => s.tier === 'gold').length > 0 && (
-            <div className="mb-10">
-              <h3 className="text-center text-amber-600 font-bold text-sm uppercase tracking-wider mb-4">⭐ Goud Sponsoren</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
-                {sponsors.filter(s => s.tier === 'gold').map(s => (
+        {/* Silver */}
+        {sponsors.filter((s) => s.tier === 'silver').length > 0 && (
+          <div className="mb-10">
+            <h3 className="text-center text-slate-400 text-xs font-semibold uppercase tracking-wider mb-4">
+              Zilver
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              {sponsors
+                .filter((s) => s.tier === 'silver')
+                .map((s) => (
                   <SponsorCard key={s.id} sponsor={s} />
                 ))}
-              </div>
             </div>
-          )}
+          </div>
+        )}
 
-          {/* Silver */}
-          {sponsors.filter(s => s.tier === 'silver').length > 0 && (
-            <div className="mb-10">
-              <h3 className="text-center text-gray-500 font-bold text-sm uppercase tracking-wider mb-4">🥈 Zilver Sponsoren</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto">
-                {sponsors.filter(s => s.tier === 'silver').map(s => (
-                  <SponsorCard key={s.id} sponsor={s} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Bronze */}
-          {sponsors.filter(s => s.tier === 'bronze').length > 0 && (
-            <div>
-              <h3 className="text-center text-amber-800 font-bold text-sm uppercase tracking-wider mb-4">🥉 Brons Sponsoren</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-w-3xl mx-auto">
-                {sponsors.filter(s => s.tier === 'bronze').map(s => (
+        {/* Bronze */}
+        {sponsors.filter((s) => s.tier === 'bronze').length > 0 && (
+          <div>
+            <h3 className="text-center text-slate-500 text-xs font-semibold uppercase tracking-wider mb-4">
+              Brons
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-3xl mx-auto">
+              {sponsors
+                .filter((s) => s.tier === 'bronze')
+                .map((s) => (
                   <SponsorCard key={s.id} sponsor={s} small />
                 ))}
-              </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </section>
 
-      {/* Word Sponsor Form */}
-      <section id="meedoen" className="container mx-auto px-4 py-16">
+      {/* ─── WORD SPONSOR ─── */}
+      <section id="meedoen" className="max-w-6xl mx-auto px-6 py-24">
         <div className="max-w-xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-black text-gray-900">🤝 Word Sponsor</h2>
-            <p className="text-gray-500 mt-2">
-              Steun de buurt én vergroot uw naamsbekendheid!<br />
-              Uw logo op de website, in de zaal en op het grote scherm.
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold">Word Sponsor</h2>
+            <p className="text-slate-400 text-sm mt-2">
+              Steun de buurt én vergroot uw naamsbekendheid.
             </p>
           </div>
 
           {/* Pricing tiers */}
-          <div className="grid grid-cols-3 gap-3 mb-8">
+          <div className="grid grid-cols-3 gap-4 mb-10">
             {[
-              { tier: 'Brons', price: '€25', color: 'border-amber-800 bg-amber-50', features: ['Naam op website', 'Vermelding in zaal'] },
-              { tier: 'Zilver', price: '€50', color: 'border-gray-400 bg-gray-50', features: ['Logo op website', 'Vermelding in zaal', 'Slideshow vermelding'] },
-              { tier: 'Goud', price: '€100', color: 'border-amber-500 bg-amber-50', features: ['Groot logo op website', 'Banner in zaal', 'Slideshow + aankondiging', 'Social media shoutout'] },
-            ].map(t => (
-              <div key={t.tier} className={`border-2 rounded-xl p-4 text-center ${t.color}`}>
-                <div className="font-black text-lg">{t.tier}</div>
-                <div className="text-2xl font-black text-red-600 my-2">{t.price}</div>
-                <div className="text-xs text-gray-500">per seizoen</div>
-                <ul className="text-xs text-gray-600 mt-3 space-y-1 text-left">
-                  {t.features.map(f => <li key={f}>✓ {f}</li>)}
+              {
+                tier: 'Brons',
+                price: '€25',
+                features: ['Naam op website', 'Vermelding in zaal'],
+              },
+              {
+                tier: 'Zilver',
+                price: '€50',
+                features: ['Logo op website', 'Vermelding in zaal', 'Slideshow vermelding'],
+              },
+              {
+                tier: 'Goud',
+                price: '€100',
+                features: [
+                  'Groot logo op website',
+                  'Banner in zaal',
+                  'Slideshow + aankondiging',
+                  'Social media shoutout',
+                ],
+              },
+            ].map((t) => (
+              <div
+                key={t.tier}
+                className="bg-[#161F2F] border border-[#F5C451]/20 hover:border-[#F5C451]/40 rounded-xl p-4 text-center transition-colors"
+              >
+                <div className="font-bold text-sm">{t.tier}</div>
+                <div className="text-2xl font-bold text-[#F5C451] my-2">{t.price}</div>
+                <div className="text-xs text-slate-500">per seizoen</div>
+                <ul className="text-xs text-slate-400 mt-3 space-y-1 text-left">
+                  {t.features.map((f) => (
+                    <li key={f}>✓ {f}</li>
+                  ))}
                 </ul>
               </div>
             ))}
@@ -221,108 +241,139 @@ export default function Home() {
           <form
             action="https://formspree.io/f/placeholder"
             method="POST"
-            className="bg-white rounded-2xl border-2 border-gray-200 p-6 space-y-4"
+            className="bg-[#161F2F] border border-white/10 rounded-2xl p-6 space-y-4"
           >
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-1">Bedrijfsnaam *</label>
-              <input type="text" name="bedrijf" required
-                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500" />
+              <label className="block text-sm font-medium text-slate-300 mb-1">Bedrijfsnaam *</label>
+              <input
+                type="text"
+                name="bedrijf"
+                required
+                className="w-full bg-[#161F2F] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#F5C451] placeholder:text-slate-600"
+              />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-1">Contactpersoon *</label>
-              <input type="text" name="naam" required
-                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500" />
+              <label className="block text-sm font-medium text-slate-300 mb-1">Contactpersoon *</label>
+              <input
+                type="text"
+                name="naam"
+                required
+                className="w-full bg-[#161F2F] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#F5C451] placeholder:text-slate-600"
+              />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-1">E-mail *</label>
-              <input type="email" name="email" required
-                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500" />
+              <label className="block text-sm font-medium text-slate-300 mb-1">E-mail *</label>
+              <input
+                type="email"
+                name="email"
+                required
+                className="w-full bg-[#161F2F] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#F5C451] placeholder:text-slate-600"
+              />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-1">Telefoon</label>
-              <input type="tel" name="telefoon"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500" />
+              <label className="block text-sm font-medium text-slate-300 mb-1">Telefoon</label>
+              <input
+                type="tel"
+                name="telefoon"
+                className="w-full bg-[#161F2F] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#F5C451] placeholder:text-slate-600"
+              />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-1">Gewenst pakket</label>
-              <select name="pakket" className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500">
-                <option value="brons">🥉 Brons — €25/seizoen</option>
-                <option value="zilver">🥈 Zilver — €50/seizoen</option>
-                <option value="goud">⭐ Goud — €100/seizoen</option>
+              <label className="block text-sm font-medium text-slate-300 mb-1">Gewenst pakket</label>
+              <select
+                name="pakket"
+                className="w-full bg-[#161F2F] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#F5C451]"
+              >
+                <option value="brons">Brons — €25/seizoen</option>
+                <option value="zilver">Zilver — €50/seizoen</option>
+                <option value="goud">Goud — €100/seizoen</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-1">Bericht (optioneel)</label>
-              <textarea name="bericht" rows={3}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500" />
+              <label className="block text-sm font-medium text-slate-300 mb-1">Bericht (optioneel)</label>
+              <textarea
+                name="bericht"
+                rows={3}
+                className="w-full bg-[#161F2F] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#F5C451] placeholder:text-slate-600"
+              />
             </div>
-            <button type="submit"
-              className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg transition-colors text-lg">
-              Aanmelden als Sponsor 🎉
+            <button
+              type="submit"
+              className="w-full bg-[#F5C451] text-[#0E1623] font-bold py-3 rounded-lg hover:bg-[#F5C451]/90 transition-colors"
+            >
+              Aanmelden als Sponsor
             </button>
           </form>
         </div>
       </section>
 
-      {/* Slideshow CTA */}
-      <section className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl font-black mb-3">📺 Fullscreen Slideshow</h2>
-          <p className="text-gray-400 mb-6">Toon sponsoren en mededelingen op het grote scherm in de zaal</p>
-          <Link href="/slideshow"
-            className="inline-block bg-amber-500 hover:bg-amber-600 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors">
-            Start Slideshow →
-          </Link>
-        </div>
+      {/* ─── SLIDESHOW CTA ─── */}
+      <section className="max-w-6xl mx-auto px-6 py-20 text-center">
+        <h2 className="text-xl font-bold mb-2">Fullscreen Slideshow</h2>
+        <p className="text-slate-500 text-sm mb-6">
+          Toon sponsoren en mededelingen op het grote scherm in de zaal
+        </p>
+        <Link
+          href="/slideshow"
+          className="inline-block border border-[#F5C451] text-[#F5C451] font-semibold px-8 py-3 rounded-full hover:bg-[#F5C451]/10 transition-colors"
+        >
+          Start Slideshow →
+        </Link>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-8 border-t border-gray-800">
-        <div className="container mx-auto px-4 text-center text-sm">
-          <div className="flex justify-center items-center gap-2 mb-3">
-            <span className="text-2xl">🎱</span>
-            <span className="font-bold text-white">Maaspoort Bingo</span>
-          </div>
+      {/* ─── FOOTER ─── */}
+      <footer className="border-t border-white/5 py-10">
+        <div className="max-w-6xl mx-auto px-6 text-center text-sm text-slate-500">
           <p>Wijkcentrum Maaspoort — Deutersestraat 2, Den Bosch</p>
           <p className="mt-2">
-            Vragen? Mail naar{' '}
-            <a href="mailto:bingo@maaspoort.nl" className="text-amber-400 hover:text-amber-300">
+            Vragen?{' '}
+            <a href="mailto:bingo@maaspoort.nl" className="text-[#F5C451]/70 hover:text-[#F5C451] transition-colors">
               bingo@maaspoort.nl
             </a>
           </p>
-          <p className="mt-4 text-gray-600">© 2026 Maaspoort Bingo — Met ❤️ gemaakt voor de buurt</p>
+          <p className="mt-4 text-slate-600">© 2026 Maaspoort Bingo</p>
         </div>
       </footer>
     </div>
   );
 }
 
-function SponsorCard({ sponsor, small }: { sponsor: typeof sponsors[0]; small?: boolean }) {
+function SponsorCard({ sponsor, small }: { sponsor: (typeof sponsors)[0]; small?: boolean }) {
   const content = (
-    <div className={`bg-white rounded-xl border border-gray-200 hover:shadow-md hover:border-amber-300 transition-all ${small ? 'p-3' : 'p-5'}`}>
-      {/* Logo placeholder */}
-      <div className={`rounded-lg flex items-center justify-center font-black mb-2 ${
-        small ? 'h-12 text-lg' : 'h-20 text-2xl'
-      }`} style={{
-        backgroundColor: sponsor.tier === 'gold' ? '#FEF3C7' : sponsor.tier === 'silver' ? '#F3F4F6' : '#FFF7ED',
-        color: sponsor.tier === 'gold' ? '#D97706' : sponsor.tier === 'silver' ? '#6B7280' : '#92400E',
-      }}>
+    <div
+      className={`bg-[#161F2F] border border-[#F5C451]/20 hover:border-[#F5C451]/40 rounded-xl transition-colors ${
+        small ? 'p-3' : 'p-5'
+      }`}
+    >
+      <div
+        className={`rounded-lg flex items-center justify-center font-bold text-slate-500 mb-2 ${
+          small ? 'h-12 text-lg' : 'h-16 text-2xl'
+        }`}
+      >
         {sponsor.logo ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={sponsor.logo} alt={sponsor.name} className="max-h-full max-w-full object-contain p-2" />
+          <img
+            src={sponsor.logo}
+            alt={sponsor.name}
+            className="max-h-full max-w-full object-contain p-2"
+          />
         ) : (
-          sponsor.name.charAt(0)
+          <span className="text-[#F5C451]/50">{sponsor.name.charAt(0)}</span>
         )}
       </div>
-      <div className={`font-bold text-gray-900 ${small ? 'text-xs' : 'text-sm'}`}>{sponsor.name}</div>
+      <div className={`font-semibold ${small ? 'text-xs' : 'text-sm'}`}>{sponsor.name}</div>
       {!small && sponsor.description && (
-        <p className="text-xs text-gray-500 mt-1">{sponsor.description}</p>
+        <p className="text-xs text-slate-400 mt-1">{sponsor.description}</p>
       )}
     </div>
   );
 
   if (sponsor.website) {
-    return <a href={sponsor.website} target="_blank" rel="noopener noreferrer">{content}</a>;
+    return (
+      <a href={sponsor.website} target="_blank" rel="noopener noreferrer">
+        {content}
+      </a>
+    );
   }
   return content;
 }

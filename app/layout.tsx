@@ -6,15 +6,18 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Maaspoort Bingo — Den Bosch',
-  description: 'Gezellige bingoavonden in Maaspoort, Den Bosch. Bekijk de agenda, word sponsor en win mooie prijzen!',
+  description:
+    'Maaspoort Bingo organiseert gezellige bingo-avonden in Den Bosch. De opbrengst gaat naar lokale goede doelen.',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-icon.png',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="nl">
-      <body className={`${inter.className} bg-white min-h-screen`}>
-        {children}
-      </body>
+      <body className={`${inter.className} min-h-screen`}>{children}</body>
     </html>
   );
 }

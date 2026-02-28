@@ -2,16 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bingo-red: #DC2626;
-  --bingo-gold: #F59E0B;
-  --bingo-blue: #1E40AF;
-  --bingo-green: #059669;
-}
-
 @layer base {
-  html { scroll-behavior: smooth; }
-  body { color: #1a1a2e; }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #0E1623;
+    color: #EDEDED;
+  }
 }
 
 @keyframes slideIn {
@@ -19,16 +17,19 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes pulse-border {
-  0%, 100% { border-color: #F59E0B; }
-  50% { border-color: #DC2626; }
-}
-
 .animate-slide-in {
   animation: slideIn 0.6s ease-out forwards;
 }
 
-.bingo-ball {
-  background: radial-gradient(circle at 35% 35%, #fff 0%, #f0f0f0 30%, #ddd 70%);
-  box-shadow: 4px 4px 12px rgba(0,0,0,0.3), inset -2px -2px 6px rgba(0,0,0,0.1);
+.logo-glow {
+  filter: drop-shadow(0 0 30px rgba(245, 196, 81, 0.35));
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
 }
