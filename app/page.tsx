@@ -4,11 +4,23 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { events, sponsors, isUpcoming } from '@/lib/data';
-import { Spotlight } from '@/components/ui/spotlight';
-import { AnimatedBorder } from '@/components/ui/animated-border';
+import { LampSection } from '@/components/ui/lamp';
+import { FlipWords } from '@/components/ui/flip-words';
+import { Card3D, CardBody, CardItem } from '@/components/ui/card-3d';
+import { GlowingBorder } from '@/components/ui/glowing-border';
+import { BackgroundBeams } from '@/components/ui/background-beams';
+import { FloatingDock } from '@/components/ui/floating-dock';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/fade-in';
 import { GlowCard } from '@/components/ui/glow-card';
 import { Particles } from '@/components/ui/particles';
+
+const dockItems = [
+  { label: 'Home', href: '#', icon: '🏠' },
+  { label: 'Agenda', href: '#agenda', icon: '📅' },
+  { label: 'Sponsoren', href: '#sponsoren', icon: '🏆' },
+  { label: 'Word Sponsor', href: '#meedoen', icon: '🤝' },
+  { label: 'Slideshow', href: '/slideshow', icon: '📺' },
+];
 
 export default function Home() {
   const upcomingEvents = events.filter((e) => isUpcoming(e.date));
@@ -16,13 +28,16 @@ export default function Home() {
   const specialEvents = upcomingEvents.filter((e) => e.special).slice(0, 3);
 
   return (
-    <div className="min-h-screen">
-      {/* ─── NAV ─── */}
+    <div className="min-h-screen relative">
+      {/* ─── FLOATING DOCK NAV ─── */}
+      <FloatingDock items={dockItems} />
+
+      {/* ─── TOP NAV ─── */}
       <motion.nav
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between"
+        className="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between relative z-10"
       >
         <div className="flex items-center gap-3">
           <Image src="/logo.png" alt="Maaspoort Bingo" width={36} height={36} className="rounded-full" />
@@ -34,19 +49,19 @@ export default function Home() {
         </div>
       </motion.nav>
 
-      {/* ─── HERO ─── */}
-      <Spotlight className="max-w-5xl mx-auto px-6 pt-8 pb-16 md:pt-12 md:pb-24 relative">
+      {/* ─── HERO WITH BEAMS ─── */}
+      <section className="relative max-w-5xl mx-auto px-6 pt-8 pb-16 md:pt-12 md:pb-24 overflow-hidden">
+        <BackgroundBeams />
         <Particles />
+
         <div className="flex flex-col items-center text-center relative z-10">
-          {/* Logo with floating glow */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
             className="relative mb-10"
           >
-            {/* Ambient glow behind logo */}
-            <div className="absolute inset-0 blur-[60px] bg-[#C8982E]/25 rounded-full scale-90" />
+            <div className="absolute inset-0 blur-[80px] bg-[#C8982E]/25 rounded-full scale-90" />
             <Image
               src="/logo.png"
               alt="Maaspoort Bingo"
@@ -57,16 +72,21 @@ export default function Home() {
             />
           </motion.div>
 
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="font-serif-display italic text-2xl md:text-4xl gold-text mb-8"
+            className="mb-8"
           >
-            {nextEvent
-              ? `Volgende bingo: ${new Date(nextEvent.date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })}`
-              : 'Binnenkort weer bingo!'}
-          </motion.h1>
+            <span className="font-serif-display italic text-2xl md:text-4xl gold-text">
+              {nextEvent
+                ? `Volgende bingo: ${new Date(nextEvent.date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })}`
+                : 'Binnenkort weer bingo!'}
+            </span>
+            <div className="mt-3 text-slate-400 text-lg">
+              <FlipWords words={['Gezelligheid', 'Mooie prijzen', 'Voor de buurt', 'Samen winnen']} />
+            </div>
+          </motion.div>
 
           <motion.a
             href="#agenda"
@@ -80,9 +100,9 @@ export default function Home() {
             Doe mee
           </motion.a>
         </div>
-      </Spotlight>
+      </section>
 
-      {/* ─── SPECIAL EVENTS ─── */}
+      {/* ─── SPECIAL EVENTS WITH 3D CARDS ─── */}
       {specialEvents.length > 0 && (
         <section className="max-w-5xl mx-auto px-6 pb-20">
           <FadeIn>
@@ -90,65 +110,77 @@ export default function Home() {
               Bingo Agenda
             </h2>
           </FadeIn>
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
             {specialEvents.map((event) => (
               <StaggerItem key={event.id}>
-                <AnimatedBorder>
-                  <div className="p-6 text-center">
-                    <div className="w-2 h-2 rounded-full bg-[#C8982E] mx-auto mb-4" />
-                    <div className="font-bold text-sm mb-1">
-                      {event.description?.replace(/[🧡🌞]/g, '').trim() || 'Bingo'}
-                    </div>
-                    <div className="text-xs text-slate-400">
-                      {new Date(event.date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })}
-                    </div>
-                  </div>
-                </AnimatedBorder>
+                <Card3D>
+                  <GlowingBorder>
+                    <CardBody className="p-6 text-center">
+                      <CardItem translateZ={30}>
+                        <div className="w-2 h-2 rounded-full bg-[#C8982E] mx-auto mb-4 shadow-[0_0_10px_#C8982E]" />
+                      </CardItem>
+                      <CardItem translateZ={50}>
+                        <div className="font-bold text-sm mb-1">
+                          {event.description?.replace(/[🧡🌞]/g, '').trim() || 'Bingo'}
+                        </div>
+                      </CardItem>
+                      <CardItem translateZ={20}>
+                        <div className="text-xs text-slate-400">
+                          {new Date(event.date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })}
+                        </div>
+                      </CardItem>
+                    </CardBody>
+                  </GlowingBorder>
+                </Card3D>
               </StaggerItem>
             ))}
           </StaggerContainer>
         </section>
       )}
 
-      {/* ─── FULL AGENDA ─── */}
-      <section id="agenda" className="max-w-5xl mx-auto px-6 py-20">
-        <FadeIn>
-          <h2 className="divider-gold font-serif-display italic gold-text text-lg md:text-xl text-center mb-8">
+      {/* ─── LAMP + FULL AGENDA ─── */}
+      <section id="agenda">
+        <LampSection className="pt-32 pb-8">
+          <h2 className="font-serif-display italic gold-text text-2xl md:text-3xl text-center mb-2">
             Alle data
           </h2>
-        </FadeIn>
-        <StaggerContainer className="grid gap-3 max-w-2xl mx-auto">
-          {upcomingEvents.length === 0 ? (
-            <p className="text-center text-slate-500 py-10">Geen aankomende data gepland. Kom snel terug!</p>
-          ) : (
-            upcomingEvents.map((event) => (
-              <StaggerItem key={event.id}>
-                <GlowCard>
-                  <div className="flex overflow-hidden">
-                    <div className="flex-shrink-0 w-20 flex flex-col items-center justify-center p-3 bg-[#C8982E]/10">
-                      <span className="text-2xl font-bold text-[#C8982E]">{new Date(event.date).getDate()}</span>
-                      <span className="text-xs uppercase text-slate-400">
-                        {new Date(event.date).toLocaleDateString('nl-NL', { month: 'short' })}
-                      </span>
-                    </div>
-                    <div className="p-4 flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="font-semibold text-sm">{event.time} uur</span>
-                        {event.special && (
-                          <span className="gold-text text-xs font-semibold">✦ Special</span>
+          <p className="text-slate-400 text-sm text-center">Aankomende bingoavonden</p>
+        </LampSection>
+
+        <div className="max-w-5xl mx-auto px-6 pb-20">
+          <StaggerContainer className="grid gap-3 max-w-2xl mx-auto">
+            {upcomingEvents.length === 0 ? (
+              <p className="text-center text-slate-500 py-10">Geen aankomende data gepland.</p>
+            ) : (
+              upcomingEvents.map((event) => (
+                <StaggerItem key={event.id}>
+                  <GlowCard>
+                    <div className="flex overflow-hidden">
+                      <div className="flex-shrink-0 w-20 flex flex-col items-center justify-center p-3 bg-[#C8982E]/10">
+                        <span className="text-2xl font-bold text-[#C8982E]">{new Date(event.date).getDate()}</span>
+                        <span className="text-xs uppercase text-slate-400">
+                          {new Date(event.date).toLocaleDateString('nl-NL', { month: 'short' })}
+                        </span>
+                      </div>
+                      <div className="p-4 flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-semibold text-sm">{event.time} uur</span>
+                          {event.special && (
+                            <span className="gold-text text-xs font-semibold">✦ Special</span>
+                          )}
+                        </div>
+                        <p className="text-xs text-slate-400">{event.location} — {event.address}</p>
+                        {event.description && (
+                          <p className="text-sm text-slate-300 mt-1">{event.description}</p>
                         )}
                       </div>
-                      <p className="text-xs text-slate-400">{event.location} — {event.address}</p>
-                      {event.description && (
-                        <p className="text-sm text-slate-300 mt-1">{event.description}</p>
-                      )}
                     </div>
-                  </div>
-                </GlowCard>
-              </StaggerItem>
-            ))
-          )}
-        </StaggerContainer>
+                  </GlowCard>
+                </StaggerItem>
+              ))
+            )}
+          </StaggerContainer>
+        </div>
       </section>
 
       {/* ─── MISSIE ─── */}
@@ -166,55 +198,58 @@ export default function Home() {
         </FadeIn>
       </section>
 
-      {/* ─── SPONSOREN ─── */}
-      <section id="sponsoren" className="max-w-5xl mx-auto px-6 py-20">
-        <FadeIn>
-          <h2 className="divider-gold font-serif-display italic gold-text text-lg md:text-xl text-center mb-10">
+      {/* ─── SPONSOREN WITH 3D CARDS ─── */}
+      <section id="sponsoren">
+        <LampSection className="pt-32 pb-8">
+          <h2 className="font-serif-display italic gold-text text-2xl md:text-3xl text-center mb-2">
             Onze Sponsoren
           </h2>
-        </FadeIn>
+          <p className="text-slate-400 text-sm text-center">Dankzij hen kunnen wij mooie prijzen aanbieden</p>
+        </LampSection>
 
-        {/* Gold */}
-        {sponsors.filter((s) => s.tier === 'gold').length > 0 && (
-          <div className="mb-8">
-            <p className="text-center text-xs uppercase tracking-wider text-[#C8982E] font-semibold mb-4">Goud</p>
-            <StaggerContainer className="flex flex-wrap justify-center gap-4">
-              {sponsors.filter((s) => s.tier === 'gold').map((s) => (
-                <StaggerItem key={s.id}>
-                  <SponsorCard sponsor={s} />
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        )}
+        <div className="max-w-5xl mx-auto px-6 pb-20">
+          {/* Gold */}
+          {sponsors.filter((s) => s.tier === 'gold').length > 0 && (
+            <div className="mb-10">
+              <p className="text-center text-xs uppercase tracking-wider text-[#C8982E] font-semibold mb-6">Goud</p>
+              <StaggerContainer className="flex flex-wrap justify-center gap-6">
+                {sponsors.filter((s) => s.tier === 'gold').map((s) => (
+                  <StaggerItem key={s.id}>
+                    <SponsorCard sponsor={s} />
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          )}
 
-        {/* Silver */}
-        {sponsors.filter((s) => s.tier === 'silver').length > 0 && (
-          <div className="mb-8">
-            <p className="text-center text-xs uppercase tracking-wider text-slate-400 font-semibold mb-4">Zilver</p>
-            <StaggerContainer className="flex flex-wrap justify-center gap-4">
-              {sponsors.filter((s) => s.tier === 'silver').map((s) => (
-                <StaggerItem key={s.id}>
-                  <SponsorCard sponsor={s} />
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        )}
+          {/* Silver */}
+          {sponsors.filter((s) => s.tier === 'silver').length > 0 && (
+            <div className="mb-10">
+              <p className="text-center text-xs uppercase tracking-wider text-slate-400 font-semibold mb-6">Zilver</p>
+              <StaggerContainer className="flex flex-wrap justify-center gap-6">
+                {sponsors.filter((s) => s.tier === 'silver').map((s) => (
+                  <StaggerItem key={s.id}>
+                    <SponsorCard sponsor={s} />
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          )}
 
-        {/* Bronze */}
-        {sponsors.filter((s) => s.tier === 'bronze').length > 0 && (
-          <div>
-            <p className="text-center text-xs uppercase tracking-wider text-slate-500 font-semibold mb-4">Brons</p>
-            <StaggerContainer className="flex flex-wrap justify-center gap-3">
-              {sponsors.filter((s) => s.tier === 'bronze').map((s) => (
-                <StaggerItem key={s.id}>
-                  <SponsorCard sponsor={s} small />
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        )}
+          {/* Bronze */}
+          {sponsors.filter((s) => s.tier === 'bronze').length > 0 && (
+            <div>
+              <p className="text-center text-xs uppercase tracking-wider text-slate-500 font-semibold mb-6">Brons</p>
+              <StaggerContainer className="flex flex-wrap justify-center gap-4">
+                {sponsors.filter((s) => s.tier === 'bronze').map((s) => (
+                  <StaggerItem key={s.id}>
+                    <SponsorCard sponsor={s} small />
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          )}
+        </div>
       </section>
 
       {/* ─── WORD SPONSOR ─── */}
@@ -236,18 +271,20 @@ export default function Home() {
               { tier: 'Goud', price: '€100', features: ['Groot logo', 'Banner in zaal', 'Slideshow', 'Social media'] },
             ].map((t) => (
               <StaggerItem key={t.tier}>
-                <GlowCard className="h-full">
-                  <div className="p-4 text-center">
-                    <div className="font-semibold text-sm">{t.tier}</div>
-                    <div className="text-2xl font-bold gold-text my-2">{t.price}</div>
-                    <div className="text-xs text-slate-500">per seizoen</div>
-                    <ul className="text-xs text-slate-400 mt-3 space-y-1 text-left">
-                      {t.features.map((f) => (
-                        <li key={f}>✓ {f}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </GlowCard>
+                <Card3D>
+                  <GlowCard className="h-full">
+                    <div className="p-4 text-center">
+                      <div className="font-semibold text-sm">{t.tier}</div>
+                      <div className="text-2xl font-bold gold-text my-2">{t.price}</div>
+                      <div className="text-xs text-slate-500">per seizoen</div>
+                      <ul className="text-xs text-slate-400 mt-3 space-y-1 text-left">
+                        {t.features.map((f) => (
+                          <li key={f}>✓ {f}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </GlowCard>
+                </Card3D>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -258,30 +295,28 @@ export default function Home() {
               method="POST"
               className="bg-[#161F2F] border border-white/10 rounded-2xl p-6 space-y-4"
             >
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1">Bedrijfsnaam *</label>
-                <input type="text" name="bedrijf" required
-                  className="w-full bg-[#0E1623] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#C8982E] transition-shadow placeholder:text-slate-600" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1">Contactpersoon *</label>
-                <input type="text" name="naam" required
-                  className="w-full bg-[#0E1623] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#C8982E] transition-shadow placeholder:text-slate-600" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1">E-mail *</label>
-                <input type="email" name="email" required
-                  className="w-full bg-[#0E1623] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#C8982E] transition-shadow placeholder:text-slate-600" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1">Telefoon</label>
-                <input type="tel" name="telefoon"
-                  className="w-full bg-[#0E1623] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#C8982E] transition-shadow placeholder:text-slate-600" />
-              </div>
+              {[
+                { label: 'Bedrijfsnaam *', name: 'bedrijf', type: 'text', required: true },
+                { label: 'Contactpersoon *', name: 'naam', type: 'text', required: true },
+                { label: 'E-mail *', name: 'email', type: 'email', required: true },
+                { label: 'Telefoon', name: 'telefoon', type: 'tel', required: false },
+              ].map((field) => (
+                <div key={field.name}>
+                  <label className="block text-sm font-medium text-slate-300 mb-1">{field.label}</label>
+                  <input
+                    type={field.type}
+                    name={field.name}
+                    required={field.required}
+                    className="w-full bg-[#0E1623] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#C8982E] transition-shadow placeholder:text-slate-600"
+                  />
+                </div>
+              ))}
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-1">Gewenst pakket</label>
-                <select name="pakket"
-                  className="w-full bg-[#0E1623] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#C8982E] transition-shadow">
+                <select
+                  name="pakket"
+                  className="w-full bg-[#0E1623] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#C8982E] transition-shadow"
+                >
                   <option value="brons">Brons — €25/seizoen</option>
                   <option value="zilver">Zilver — €50/seizoen</option>
                   <option value="goud">Goud — €100/seizoen</option>
@@ -289,8 +324,11 @@ export default function Home() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-1">Bericht (optioneel)</label>
-                <textarea name="bericht" rows={3}
-                  className="w-full bg-[#0E1623] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#C8982E] transition-shadow placeholder:text-slate-600" />
+                <textarea
+                  name="bericht"
+                  rows={3}
+                  className="w-full bg-[#0E1623] border border-white/10 rounded-lg px-4 py-2.5 text-[#EDEDED] focus:outline-none focus:ring-2 focus:ring-[#C8982E] transition-shadow placeholder:text-slate-600"
+                />
               </div>
               <motion.button
                 type="submit"
@@ -319,7 +357,7 @@ export default function Home() {
       </FadeIn>
 
       {/* ─── FOOTER ─── */}
-      <footer className="border-t border-white/5 py-8">
+      <footer className="border-t border-white/5 py-8 pb-24">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <div className="flex justify-center gap-4 mb-4">
             <SocialIcon href="https://instagram.com" icon="instagram" />
@@ -333,35 +371,37 @@ export default function Home() {
   );
 }
 
+/* ─── SPONSOR CARD ─── */
 function SponsorCard({ sponsor, small }: { sponsor: (typeof sponsors)[0]; small?: boolean }) {
   const size = small ? 'w-40 h-40' : 'w-52 h-52';
   const content = (
-    <GlowCard className={`text-center ${size} group`}>
-      <div className="h-full flex items-center justify-center p-3 relative overflow-hidden">
-        {sponsor.logo ? (
-          <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={sponsor.logo}
-              alt={sponsor.name}
-              className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
-            />
-            {/* Hover overlay with name */}
-            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center rounded-lg m-3">
-              <span className="text-white font-semibold text-sm">{sponsor.name}</span>
-              {sponsor.description && (
-                <span className="text-slate-300 text-xs mt-1 px-2 text-center">{sponsor.description}</span>
-              )}
+    <Card3D>
+      <GlowCard className={`text-center ${size} group`}>
+        <div className="h-full flex items-center justify-center p-3 relative overflow-hidden">
+          {sponsor.logo ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={sponsor.logo}
+                alt={sponsor.name}
+                className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center rounded-lg m-3">
+                <span className="text-white font-semibold text-sm">{sponsor.name}</span>
+                {sponsor.description && (
+                  <span className="text-slate-300 text-xs mt-1 px-2 text-center">{sponsor.description}</span>
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="flex flex-col items-center justify-center">
+              <span className="gold-text text-4xl font-bold mb-2">{sponsor.name.charAt(0)}</span>
+              <span className={`font-semibold ${small ? 'text-xs' : 'text-sm'}`}>{sponsor.name}</span>
             </div>
-          </>
-        ) : (
-          <div className="flex flex-col items-center justify-center">
-            <span className="gold-text text-4xl font-bold mb-2">{sponsor.name.charAt(0)}</span>
-            <span className={`font-semibold ${small ? 'text-xs' : 'text-sm'}`}>{sponsor.name}</span>
-          </div>
-        )}
-      </div>
-    </GlowCard>
+          )}
+        </div>
+      </GlowCard>
+    </Card3D>
   );
 
   if (sponsor.website) {
@@ -370,6 +410,7 @@ function SponsorCard({ sponsor, small }: { sponsor: (typeof sponsors)[0]; small?
   return content;
 }
 
+/* ─── SOCIAL ICON ─── */
 function SocialIcon({ href, icon }: { href: string; icon: 'instagram' | 'facebook' }) {
   const paths = {
     instagram: 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z',
