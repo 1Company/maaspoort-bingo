@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" rx="20" fill="#2D5A27"/>
+  <rect x="55" y="50" width="50" height="12" rx="2" fill="#D4A054"/>
+  <rect x="60" y="62" width="40" height="35" rx="2" fill="#E8D5A3"/>
+  <rect x="75" y="97" width="10" height="40" rx="2" fill="#8B6914"/>
+  <circle cx="135" cy="80" r="3" fill="#FF6B6B"/>
+  <circle cx="140" cy="68" r="3" fill="#4ECDC4"/>
+  <circle cx="130" cy="72" r="3" fill="#FFE66D"/>
+  <text x="100" y="155" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold" font-size="16" fill="white">Schildersbedrijf</text>
+  <text x="100" y="175" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold" font-size="22" fill="#E8D5A3">JANSEN</text>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" rx="20" fill="#8B4513"/>
+  <ellipse cx="100" cy="85" rx="55" ry="35" fill="#D4A054"/>
+  <ellipse cx="75" cy="80" rx="20" ry="28" fill="#C4903C"/>
+  <ellipse cx="125" cy="80" rx="20" ry="28" fill="#C4903C"/>
+  <ellipse cx="100" cy="78" rx="18" ry="26" fill="#C4903C"/>
+  <rect x="60" y="85" width="80" height="25" rx="3" fill="#D4A054"/>
+  <text x="100" y="150" text-anchor="middle" font-family="Georgia,serif" font-weight="bold" font-size="22" fill="white">Van den Berg</text>
+  <text x="100" y="170" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#D4A054">BAKKERIJ</text>
+</svg>

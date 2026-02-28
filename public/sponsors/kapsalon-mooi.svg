@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" rx="20" fill="#2D2033"/>
+  <path d="M85 55 q15-20 30 0 q-5 25 -15 40 q-10-15 -15-40z" fill="#E8A0BF" opacity="0.8"/>
+  <path d="M90 55 q-20-15 -10 15 q10 20 25 25" fill="none" stroke="#E8A0BF" stroke-width="3"/>
+  <path d="M110 55 q20-15 10 15 q-10 20 -25 25" fill="none" stroke="#E8A0BF" stroke-width="3"/>
+  <text x="100" y="130" text-anchor="middle" font-family="Georgia,serif" font-weight="bold" font-size="30" fill="white">Mooi</text>
+  <text x="100" y="152" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#E8A0BF">KAPSALON</text>
+</svg>

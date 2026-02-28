@@ -336,12 +336,12 @@ function SponsorCard({ sponsor, small }: { sponsor: (typeof sponsors)[0]; small?
   const content = (
     <GlowCard className={`text-center ${size}`}>
       <div className="h-full flex flex-col items-center justify-center p-4">
-        <div className={`flex items-center justify-center mb-3 ${small ? 'text-3xl' : 'text-4xl'}`}>
+        <div className={`flex items-center justify-center mb-3 ${small ? 'w-20 h-20' : 'w-24 h-24'}`}>
           {sponsor.logo ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={sponsor.logo} alt={sponsor.name} className="max-h-12 max-w-full object-contain" />
+            <img src={sponsor.logo} alt={sponsor.name} className="w-full h-full object-contain rounded-lg" />
           ) : (
-            <span>{sponsor.icon || sponsor.name.charAt(0)}</span>
+            <span className="gold-text text-3xl font-bold">{sponsor.name.charAt(0)}</span>
           )}
         </div>
         <div className={`font-semibold ${small ? 'text-xs' : 'text-sm'}`}>{sponsor.name}</div>
